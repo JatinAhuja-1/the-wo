@@ -2,7 +2,7 @@ import TableOperations from "../../ui/TableOperations";
 import Filter from "../../ui/Filter";
 import SortBy from "../../ui/SortBy";
 
-export default function CabinTableOperation() {
+function CabinTableOperations() {
   return (
     <TableOperations>
       <Filter
@@ -27,3 +27,5 @@ export default function CabinTableOperation() {
     </TableOperations>
   );
 }
+
+export default CabinTableOperations;

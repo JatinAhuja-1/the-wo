@@ -13,13 +13,12 @@ function LoginForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!email || !password) {
-      return;
-    }
+    if (!email || !password) return;
     login(
       { email, password },
       {
         onSettled: () => {
+          setEmail("");
           setPassword("");
         },
       }
@@ -39,6 +38,7 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
+
       <FormRowVertical label="Password">
         <Input
           type="password"

@@ -68,9 +68,7 @@ const Guest = styled.div`
   }
 `;
 
-const Price = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "isPaid",
-})`
+const Price = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

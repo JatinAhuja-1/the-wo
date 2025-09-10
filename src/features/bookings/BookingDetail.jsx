@@ -33,9 +33,7 @@ function BookingDetail() {
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  if (isLoading) return <Spinner />;
   if (!booking) return <Empty resourceName="booking" />;
 
   const { status, id: bookingId } = booking;
@@ -60,7 +58,7 @@ function BookingDetail() {
 
       <ButtonGroup>
         {status === "unconfirmed" && (
-          <Button onClick={() => navigate(`/check-in/${bookingId}`)}>
+          <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
             Check in
           </Button>
         )}
@@ -74,16 +72,20 @@ function BookingDetail() {
             Check out
           </Button>
         )}
+
         <Modal>
           <Modal.Open opens="delete">
             <Button variation="danger">Delete booking</Button>
           </Modal.Open>
+
           <Modal.Window name="delete">
             <ConfirmDelete
               resourceName="booking"
               disabled={isDeleting}
               onConfirm={() =>
-                deleteBooking(bookingId, { onSettled: () => navigate(-1) })
+                deleteBooking(bookingId, {
+                  onSettled: () => navigate(-1),
+                })
               }
             />
           </Modal.Window>

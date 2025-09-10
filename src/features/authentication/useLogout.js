@@ -11,8 +11,8 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.removeQueries();
       navigate("/login", { replace: true });
-      // replace isliye use kiya taki vo arrow use krke pichle page pr na ja ske
     },
   });
+
   return { logout, isLoading };
 }

@@ -21,6 +21,7 @@ function UpdateSettingsForm() {
 
   function handleUpdate(e, field) {
     const { value } = e.target;
+
     if (!value) return;
     updateSetting({ [field]: value });
   }
@@ -31,9 +32,9 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="min-nights"
+          defaultValue={minBookingLength}
           disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "minBookingLength")}
-          defaultValue={minBookingLength}
         />
       </FormRow>
 

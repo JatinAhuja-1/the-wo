@@ -1,6 +1,6 @@
-import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+import { PAGE_SIZE } from "../utils/constants";
 
 export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
@@ -10,10 +10,10 @@ export async function getBookings({ filter, sortBy, page }) {
       { count: "exact" }
     );
 
-  //Filter
-  if (filter) query = query.eq(filter.field, filter.value);
+  // FILTER
+  if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
 
-  // Sort
+  // SORT
   if (sortBy)
     query = query.order(sortBy.field, {
       ascending: sortBy.direction === "asc",
@@ -51,6 +51,7 @@ export async function getBooking(id) {
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
+// date: ISOString
 export async function getBookingsAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
@@ -70,7 +71,6 @@ export async function getBookingsAfterDate(date) {
 export async function getStaysAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
-    // .select('*')
     .select("*, guests(fullName)")
     .gte("startDate", date)
     .lte("startDate", getToday());
@@ -127,24 +127,5 @@ export async function deleteBooking(id) {
     console.error(error);
     throw new Error("Booking could not be deleted");
   }
-  return data;
-}
-
-export async function createBooking(newBooking) {
-  const { data, error } = await supabase
-    .from("bookings")
-    .insert([{...newBooking}])
-    .select();
- 
-  if (error) throw new Error(error.message);
- 
-  return data;
-}
-
-export async function getGuests() {
-  const { data, error} = await supabase.from("guests").select("*");
- 
-  if (error) throw new Error(error.message);
- 
   return data;
 }

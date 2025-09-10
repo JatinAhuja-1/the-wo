@@ -9,13 +9,12 @@ export function useRecentBookings() {
   const numDays = !searchParams.get("last")
     ? 7
     : Number(searchParams.get("last"));
-
-  const queryDate = subDays(new Date(), numDays).toISOString(); // ye basically aaj ke date se given date ko minus krke result dedega isse hame last 7, 30 days ki cheeze nikalne me help hogi
+  const queryDate = subDays(new Date(), numDays).toISOString();
 
   const { isLoading, data: bookings } = useQuery({
     queryFn: () => getBookingsAfterDate(queryDate),
     queryKey: ["bookings", `last-${numDays}`],
   });
 
-  return { bookings, isLoading };
+  return { isLoading, bookings };
 }
